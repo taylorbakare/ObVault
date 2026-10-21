@@ -20,7 +20,7 @@
   --border-strong: #c9bda6;
   --shadow-md: 0 10px 30px rgba(60, 45, 30, 0.10);
   --media-bg: #e8e2d3;
-  --font-display: 'Boska', Georgia, 'Times New Roman', serif;
+  --font-display: 'Boska', Georgia, 'Times New Roman', sans-serif;
   --font-body: 'Switzer', 'Helvetica Neue', sans-serif;
   --font-mono: 'Fragment Mono', 'Courier New', monospace;
   --feed-w: 640px;
