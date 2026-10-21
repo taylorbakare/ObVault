@@ -1,0 +1,26 @@
+# Fly.io config for ObVault. Deploy with:
+#   fly launch (skip their suggested Postgres — storage is a mounted volume)
+#   fly deploy
+app = "obvault"
+primary_region = "iad"
+
+[build]
+
+[env]
+  NODE_ENV = "production"
+  STORAGE_DIR = "/storage"
+
+# the JSON store and uploaded files live on this volume; losing it loses the
+# vault, so never scale to more than one machine with volumes mounted
+[[mounts]]
+  source = "obvault_storage"
+  destination = "/storage"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+
+  [[http_service.checks]]
+    interval = "15s"
+    timeout = "3s"
+    path = "/api/bootstrap"

@@ -2,7 +2,7 @@
 
 import { api, setToken } from './api.js';
 import { el, avatar, toast } from './ui.js';
-import { gateView, feedView, postView, profileView, profileEditView, opportunitiesView, composeView, archiveView } from './views.js';
+import { gateView, feedView, postView, profileView, profileEditView, opportunitiesView, composeView, archiveView, collectionView } from './views.js';
 
 const state = { me: null, categories: [], config: {} };
 
@@ -71,6 +71,8 @@ async function route() {
       node = await profileEditView(state);
     } else if ((m = path.match(/^\/(?:u\/)?(me|\d+)$/))) {
       node = await profileView(state, m[1]);
+    } else if ((m = path.match(/^\/c\/(\d+)$/))) {
+      node = await collectionView(state, Number(m[1]));
     } else if (path === '/archive') {
       node = await archiveView(state, { q: params.get('q') || '' });
     } else if (path === '/opportunities') {

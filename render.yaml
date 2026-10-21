@@ -1,0 +1,20 @@
+# Render blueprint for ObVault (one web service + one persistent disk).
+# Push this repo to GitHub, then in Render: New > Blueprint, pick the repo.
+services:
+  - type: web
+    name: obvault
+    runtime: node
+    plan: starter            # free instances sleep; starter stays awake
+    buildCommand: npm ci --omit=dev
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: STORAGE_DIR
+        value: /var/data
+      - key: GOOGLE_CLIENT_ID
+        sync: false         # set in the Render dashboard after you create it
+    disk:                    # the JSON store + uploads live on this disk
+      name: obvault-data
+      mountPath: /var/data
+      sizeGB: 5

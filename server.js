@@ -47,7 +47,7 @@ const ALLOWED_DOMAIN = 'oberlin.edu';
 store.load();
 seedIfEmpty();
 
-const UPLOADS = path.join(__dirname, 'uploads');
+const UPLOADS = path.join(process.env.STORAGE_DIR || __dirname, 'uploads');
 fs.mkdirSync(UPLOADS, { recursive: true });
 
 app.use(express.json({ limit: '4mb' }));
@@ -142,7 +142,8 @@ function publicPost(p, viewer) {
     likeCount: store.likesFor(p.id).length,
     likedByMe: viewer ? store.userLiked(p.id, viewer.id) : false,
     commentCount: store.commentsFor(p.id).length,
-    isMine: viewer ? viewer.id === p.userId : false
+    isMine: viewer ? viewer.id === p.userId : false,
+    collections: store.collectionsForPost(p.id).map((c) => ({ id: c.id, name: c.name }))
   };
 }
 
@@ -230,7 +231,11 @@ app.get('/api/users/:id', requireAuth, (req, res) => {
     .filter((p) => p.userId === u.id)
     .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
     .map((p) => publicPost(p, viewer));
-  res.json({ user: publicUser(u, viewer), works });
+  const collections = store.collectionsFor(u.id).map((c) => ({
+    id: c.id, name: c.name, description: c.description,
+    postIds: c.postIds, createdAt: c.createdAt
+  }));
+  res.json({ user: publicUser(u, viewer), works, collections });
 });
 
 app.post('/api/users/:id/follow', requireAuth, (req, res) => {
@@ -348,6 +353,69 @@ app.delete('/api/comments/:id', requireAuth, (req, res) => {
   if (c.userId !== req.user.id && !req.user.isModerator) return res.status(403).json({ error: 'Not yours to remove.' });
   store.deleteComment(c.id);
   res.json({ ok: true });
+});
+
+// --- collections
+function ownCollection(req, res) {
+  const c = store.collectionById(Number(req.params.id));
+  if (!c) { res.status(404).json({ error: 'No such collection.' }); return null; }
+  if (c.userId !== req.user.id) { res.status(403).json({ error: 'That collection belongs to someone else.' }); return null; }
+  return c;
+}
+
+app.get('/api/collections/:id', requireAuth, (req, res) => {
+  const c = store.collectionById(Number(req.params.id));
+  if (!c) return res.status(404).json({ error: 'No such collection.' });
+  const owner = store.userById(c.userId);
+  const posts = c.postIds
+    .map((pid) => store.postById(pid))
+    .filter(Boolean)
+    .map((p) => publicPost(p, req.user));
+  res.json({
+    collection: { id: c.id, name: c.name, description: c.description, createdAt: c.createdAt },
+    owner: publicUser(owner, req.user),
+    isMine: req.user.id === c.userId,
+    posts
+  });
+});
+
+app.post('/api/collections', requireAuth, (req, res) => {
+  const { name, description } = req.body || {};
+  if (!name || !String(name).trim()) return res.status(400).json({ error: 'Give the collection a name.' });
+  const c = store.createCollection(req.user.id, name, description);
+  res.status(201).json({ id: c.id, name: c.name, description: c.description, postIds: [], createdAt: c.createdAt });
+});
+
+app.patch('/api/collections/:id', requireAuth, (req, res) => {
+  const c = ownCollection(req, res);
+  if (!c) return;
+  const updated = store.updateCollection(c.id, req.body || {});
+  res.json({ id: updated.id, name: updated.name, description: updated.description });
+});
+
+app.delete('/api/collections/:id', requireAuth, (req, res) => {
+  const c = ownCollection(req, res);
+  if (!c) return;
+  store.deleteCollection(c.id);
+  res.json({ ok: true });
+});
+
+app.post('/api/collections/:id/posts', requireAuth, (req, res) => {
+  const c = ownCollection(req, res);
+  if (!c) return;
+  const { postId } = req.body || {};
+  const p = store.postById(Number(postId));
+  if (!p) return res.status(404).json({ error: 'That work is not in the vault.' });
+  if (p.userId !== req.user.id) return res.status(403).json({ error: 'You can only add your own work to a collection.' });
+  store.addToCollection(c.id, p.id);
+  res.json({ ok: true, postIds: c.postIds });
+});
+
+app.delete('/api/collections/:id/posts/:postId', requireAuth, (req, res) => {
+  const c = ownCollection(req, res);
+  if (!c) return;
+  store.removeFromCollection(c.id, Number(req.params.postId));
+  res.json({ ok: true, postIds: c.postIds });
 });
 
 // --- opportunities

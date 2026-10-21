@@ -63,7 +63,8 @@ const I = {
   play: '<path d="M7 5.5v13l11-6.5z"/>',
   pause: '<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/>',
   back: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
-  trash: '<path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/><path d="M10 11v6M14 11v6"/>'
+  trash: '<path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/><path d="M10 11v6M14 11v6"/>',
+  stack: '<path d="M12 4l8 4-8 4-8-4 8-4z"/><path d="M4 12l8 4 8-4"/><path d="M4 16l8 4 8-4"/>'
 };
 export function icon(name, filled = false) {
   return el('span', { html: `<svg viewBox="0 0 24 24" fill="${filled ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${I[name]}</svg>` });
@@ -302,6 +303,12 @@ export function postCard(post, { me, showTools = false, openComments = false } =
     ? el('div', { class: 'post-tags' }, post.tags.map((t) => el('a', { href: `#/?tag=${encodeURIComponent(t)}` }, `#${t}`)))
     : null;
 
+  // collection membership shows wherever the post appears
+  const collectionChips = post.collections && post.collections.length
+    ? el('div', { class: 'coll-row' }, post.collections.map((c) =>
+        el('a', { class: 'coll-chip', href: `#/c/${c.id}`, title: 'Part of ' + c.name }, icon('stack'), c.name)))
+    : null;
+
   // actions
   const likeBtn = el('button', {
     class: 'act' + (post.likedByMe ? ' liked' : ''),
@@ -334,7 +341,7 @@ export function postCard(post, { me, showTools = false, openComments = false } =
   const actions = el('div', { class: 'post-actions' }, likeBtn, commentBtn, shareBtn,
     el('a', { class: 'when-right', href: `#/post/${post.id}` }, timeAgo(post.createdAt)));
 
-  const body = el('div', { class: 'post-body' }, catLink, title, desc, tags, actions);
+  const body = el('div', { class: 'post-body' }, catLink, title, desc, tags, collectionChips, actions);
 
   // ---- comments: one attached container, toggled open/closed -----------------
   let cArea = null;

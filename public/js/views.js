@@ -128,6 +128,68 @@ export async function postView(state, id) {
     const back = el('a', { class: 'backlink', href: '#/' }, icon('back'), 'back to the feed');
     const card = postCard(post, { me: state.me, showTools: true, openComments: true });
     wrap.append(back, card);
+    // curate your own work into collections right from the permalink
+    if (state.me && post.isMine) {
+      const panel = el('div', { class: 'coll-picker' });
+      const toggle = el('button', { class: 'coll-picker-btn' }, icon('stack'), 'Collections');
+      const body = el('div', { class: 'coll-picker-body', style: 'display:none' });
+      let loaded = false;
+      const loadPanel = async () => {
+        if (loaded) return; loaded = true;
+        const mine = (await api.user(state.me.id)).collections;
+        const list = el('div', null);
+        const draw = (cols) => {
+          list.textContent = '';
+          cols.forEach((c) => {
+            const inIt = (post.collections || []).some((x) => x.id === c.id);
+            const b = el('button', { type: 'button', class: 'coll-pick-row' + (inIt ? ' in' : '') },
+              el('span', { class: 'coll-pick-mark' }, inIt ? '\u2713' : ''), c.name,
+              el('span', { class: 'coll-pick-count' }, c.postIds.length));
+            b.addEventListener('click', async () => {
+              try {
+                if (inIt) { await api.removeFromCollection(c.id, post.id); toast('Removed from ' + c.name); }
+                else { await api.addToCollection(c.id, post.id); toast('Added to ' + c.name); }
+                post.collections = post.collections || [];
+                post.collections = inIt ? post.collections.filter((x) => x.id !== c.id) : [...post.collections, { id: c.id, name: c.name }];
+                draw(cols.map((x) => x.id === c.id ? { ...x, postIds: x.postIds + (inIt ? -1 : 1) } : x));
+                // redraw the chips on the post card itself
+                const oldRow = card.querySelector('.coll-row');
+                const newRow = post.collections && post.collections.length
+                  ? el('div', { class: 'coll-row' }, post.collections.map((x) =>
+                      el('a', { class: 'coll-chip', href: `#/c/${x.id}`, title: 'Part of ' + x.name }, icon('stack'), x.name)))
+                  : null;
+                if (oldRow) oldRow.replaceWith(newRow || el('span'));
+                else if (newRow) card.querySelector('.post-actions').before(newRow);
+              } catch (err) { toast(err.message); }
+            });
+            list.append(b);
+          });
+        };
+        draw(mine);
+        const nameInput = el('input', { type: 'text', placeholder: 'New collection name', maxlength: '80', 'aria-label': 'New collection name' });
+        const newForm = el('form', { class: 'coll-new-inline' }, nameInput, el('button', { class: 'btn btn-accent btn-small', type: 'submit' }, 'Create'));
+        newForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          if (!nameInput.value.trim()) return;
+          try {
+            const c = await api.createCollection({ name: nameInput.value });
+            await api.addToCollection(c.id, post.id);
+            post.collections = [...(post.collections || []), { id: c.id, name: c.name }];
+            toast('Created and added');
+            loaded = false; body.textContent = ''; loadPanel().then(() => {});
+          } catch (err) { toast(err.message); }
+        });
+        body.append(el('div', { class: 'coll-picker-label' }, 'Your collections'), list, newForm);
+      };
+      toggle.addEventListener('click', async () => {
+        const open = body.style.display !== 'none';
+        body.style.display = open ? 'none' : 'block';
+        toggle.classList.toggle('open', !open);
+        if (!open) await loadPanel();
+      });
+      panel.append(toggle, body);
+      wrap.append(panel);
+    }
   } catch (err) {
     wrap.append(el('div', { class: 'empty' },
       el('div', { class: 'e-mark' }, 'This work has left the vault'),
@@ -210,7 +272,7 @@ export async function profileView(state, id) {
   const wrap = el('div', { class: 'wide' });
   const isMe = state.me && (String(id) === 'me' || Number(id) === state.me.id);
   try {
-    const { user, works } = await api.user(isMe ? state.me.id : id);
+    const { user, works, collections } = await api.user(isMe ? state.me.id : id);
     const followBtn = !isMe && state.me
       ? (() => {
         const b = el('button', { class: 'btn ' + (user.isFollowing ? 'btn-outline' : 'btn-accent') }, user.isFollowing ? 'Following' : 'Follow');
@@ -231,14 +293,70 @@ export async function profileView(state, id) {
         el('span', { class: 'avatar' }, avatar(user, 84)),
         el('div', null,
           el('div', { class: 'profile-name' }, user.name),
-          el('div', { class: 'profile-meta' }, `${user.classYear || ''}${user.isModerator ? ' · vault keeper' : ''}  ·  @${user.handle}`)),
+          el('div', { class: 'profile-meta' }, `${user.classYear || ''}${user.isModerator ? ' \u00b7 vault keeper' : ''}  \u00b7  @${user.handle}`)),
         el('div', { class: 'profile-actions' }, followBtn, editBtn)),
       user.bio ? el('p', { class: 'profile-bio' }, user.bio) : null,
       el('div', { class: 'profile-stats' },
         el('div', null, el('b', null, String(works.length)), ' works'),
         el('div', { 'data-followers': '' }, el('b', null, String(user.followers)), ' followers'),
-        el('div', null, el('b', null, String(user.following)), ' following'))));
+        el('div', null, el('b', null, String(user.following)), ' following'),
+        el('div', { 'data-coll-stat': '' }, el('b', null, String(collections.length)), collections.length === 1 ? ' collection' : ' collections'))));
 
+    // ---- collections ------------------------------------------------------
+    const collSection = el('div', { class: 'coll-section' });
+    const collGrid = el('div', { class: 'coll-grid' });
+    const redrawCollections = async () => {
+      const fresh = (await api.user(isMe ? state.me.id : id)).collections;
+      const stat = wrap.querySelector('[data-coll-stat]');
+      if (stat) {
+        stat.textContent = '';
+        stat.append(el('b', null, String(fresh.length)), fresh.length === 1 ? ' collection' : ' collections');
+      }
+      collGrid.textContent = '';
+      for (const c of fresh) {
+        const firstPost = works.find((w) => w.id === c.postIds[0]);
+        const cover = firstPost && firstPost.kind === 'image' && firstPost.media
+          ? el('img', { src: mediaUrl(firstPost.media.filename), alt: '', loading: 'lazy' })
+          : el('div', { class: 'coll-cover-txt' }, c.name.slice(0, 1));
+        collGrid.append(el('a', { class: 'coll-card', href: `#/c/${c.id}` },
+          el('div', { class: 'coll-cover' }, cover),
+          el('div', { class: 'coll-card-name' }, c.name),
+          el('div', { class: 'coll-card-count' }, c.postIds.length + (c.postIds.length === 1 ? ' work' : ' works'))));
+      }
+      if (isMe) collGrid.append(newCollectionCard());
+    };
+    const newCollectionCard = () => {
+      const btn = el('button', { class: 'coll-card coll-new' }, '+ new collection');
+      btn.addEventListener('click', () => {
+        const name = el('input', { type: 'text', placeholder: 'Collection name', maxlength: '80', 'aria-label': 'Collection name' });
+        const desc = el('input', { type: 'text', placeholder: 'A line about it (optional)', maxlength: '300', 'aria-label': 'Collection description' });
+        const form = el('form', { class: 'coll-new-form' },
+          name, desc,
+          el('div', { class: 'coll-new-actions' },
+            el('button', { class: 'btn btn-accent btn-small', type: 'submit' }, 'Create'),
+            el('button', { class: 'btn btn-ghost btn-small', type: 'button' }, 'Cancel')));
+        const card = el('div', { class: 'coll-card coll-new-form-card' }, form);
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          if (!name.value.trim()) return;
+          try {
+            await api.createCollection({ name: name.value, description: desc.value });
+            toast('Collection created');
+            redrawCollections();
+          } catch (err) { toast(err.message); }
+        });
+        form.querySelector('.btn-ghost').addEventListener('click', () => card.replaceWith(btn));
+        btn.replaceWith(card);
+        name.focus();
+      });
+      return btn;
+    };
+    collSection.append(el('div', { class: 'section-label' }, 'Collections'), collGrid);
+    wrap.append(collSection);
+    redrawCollections();
+
+    // ---- works ------------------------------------------------------------
+    wrap.append(el('div', { class: 'section-label' }, 'Works'));
     if (!works.length) {
       wrap.append(el('div', { class: 'empty' },
         el('div', { class: 'e-mark' }, 'Nothing in the vault yet'),
@@ -261,6 +379,77 @@ export async function profileView(state, id) {
 }
 
 // ---- profile edit -------------------------------------------------------------------
+
+// ---- one collection ------------------------------------------------------------
+export async function collectionView(state, id) {
+  const wrap = el('div', { class: 'wide' });
+  try {
+    const r = await api.collection(id);
+    const { collection, owner, posts, isMine } = r;
+    const back = el('a', { class: 'backlink', href: `#/u/${owner.id}` }, icon('back'), 'back to ' + owner.name);
+
+    const head = el('div', { class: 'coll-head' },
+      el('div', { class: 'coll-title-block' },
+        el('h1', { class: 'page-title' }, collection.name),
+        collection.description ? el('p', { class: 'page-sub' }, collection.description) : null,
+        el('div', { class: 'coll-meta' },
+          el('a', { class: 'coll-owner', href: `#/u/${owner.id}` }, avatar(owner, 22), owner.name),
+          el('span', { class: 'coll-count' }, posts.length + (posts.length === 1 ? ' work' : ' works')))),
+      isMine ? el('div', { class: 'coll-actions' },
+        el('button', {
+          class: 'btn btn-outline btn-small', onclick: async () => {
+            const name = prompt('Rename collection', collection.name);
+            if (!name || !name.trim()) return;
+            try { await api.updateCollection(collection.id, { name }); window.dispatchEvent(new Event('obv:refresh')); }
+            catch (err) { toast(err.message); }
+          }
+        }, 'Rename'),
+        el('button', {
+          class: 'btn btn-outline btn-small', onclick: async () => {
+            if (!confirm('Remove this collection? The works stay in the vault.')) return;
+            try { await api.deleteCollection(collection.id); location.hash = `#/u/${owner.id}`; }
+            catch (err) { toast(err.message); }
+          }
+        }, 'Delete')) : null);
+
+    wrap.append(back, head);
+    if (!posts.length) {
+      wrap.append(el('div', { class: 'empty' },
+        el('div', { class: 'e-mark' }, 'This collection is waiting'),
+        el('div', { class: 'e-sub' }, isMine ? 'Add work from any of your posts.' : '')));
+      return wrap;
+    }
+    const grid = el('div', { class: 'works-grid' });
+    for (const p of posts) {
+      const thumb = p.kind === 'image' && p.media
+        ? el('img', { src: mediaUrl(p.media.filename), alt: p.title, loading: 'lazy' })
+        : el('div', { class: 'txt' }, p.title);
+      const item = el('div', { class: 'coll-item-grid' },
+        el('a', { class: 'work', href: `#/post/${p.id}`, title: p.title }, thumb));
+      if (isMine) {
+        item.append(el('button', {
+          class: 'coll-remove', title: 'Remove from this collection',
+          onclick: async (e) => {
+            e.preventDefault();
+            try {
+              await api.removeFromCollection(collection.id, p.id);
+              item.remove();
+              const count = wrap.querySelector('.coll-count');
+              if (count) count.textContent = String(posts.length - 1) + (posts.length - 1 === 1 ? ' work' : ' works');
+            } catch (err) { toast(err.message); }
+          }
+        }, '\u00d7'));
+      }
+      grid.append(item);
+    }
+    wrap.append(grid);
+  } catch (err) {
+    wrap.append(el('div', { class: 'empty' },
+      el('div', { class: 'e-mark' }, 'That collection has left the vault'),
+      el('a', { class: 'backlink', href: '#/' }, icon('back'), 'back to the feed')));
+  }
+  return wrap;
+}
 export async function profileEditView(state) {
   if (!state.me) return el('div');
   // profile picture picker — uploads immediately, preview swaps in place

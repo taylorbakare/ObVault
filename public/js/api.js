@@ -82,7 +82,13 @@ export const api = {
   createOpportunity: (o) => req('POST', '/api/opportunities', o),
   updateOpportunity: (id, patch) => req('PATCH', `/api/opportunities/${id}`, patch),
   deleteOpportunity: (id) => req('DELETE', `/api/opportunities/${id}`),
-  interested: (id) => req('POST', `/api/opportunities/${id}/interested`)
+  interested: (id) => req('POST', `/api/opportunities/${id}/interested`),
+  collection: (id) => req('GET', `/api/collections/${id}`),
+  createCollection: (c) => req('POST', '/api/collections', c),
+  updateCollection: (id, patch) => req('PATCH', `/api/collections/${id}`, patch),
+  deleteCollection: (id) => req('DELETE', `/api/collections/${id}`),
+  addToCollection: (cid, postId) => req('POST', `/api/collections/${cid}/posts`, { postId }),
+  removeFromCollection: (cid, postId) => req('DELETE', `/api/collections/${cid}/posts/${postId}`)
 };
 
 export function mediaUrl(filename) {
