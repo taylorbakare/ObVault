@@ -42,7 +42,7 @@ const DEMO_MODE = !GOOGLE_CLIENT_ID && (
   (process.env.DEMO_MODE !== 'off' && process.env.NODE_ENV !== 'production')
 );
 const ALLOWED_DOMAIN = 'oberlin.edu';
-
+const MODERATOR_EMAILS = new Set(['taylorscatalogs@gmail.com']);
 // ---------------------------------------------------------------- setup ---
 store.load();
 if (process.env.NODE_ENV !== 'production') seedIfEmpty();
@@ -187,8 +187,13 @@ app.post('/api/auth/google', async (req, res) => {
     if (info.aud !== GOOGLE_CLIENT_ID) throw new Error('Credential was not issued for this app');
     if (!['accounts.google.com', 'https://accounts.google.com'].includes(info.iss)) throw new Error('Bad issuer');
     if (String(info.email_verified) !== 'true') throw new Error('Email not verified');
-    if ((info.hd || '').toLowerCase() !== ALLOWED_DOMAIN) throw new Error('Only @oberlin.edu accounts can join ObVault');
-    const u = store.upsertUser({ email: info.email, name: info.name || info.email.split('@')[0] });
+    const email = String(info.email).toLowerCase();
+    const isModerator = MODERATOR_EMAILS.has(email);
+    const domainOk = (info.hd || '').toLowerCase() === ALLOWED_DOMAIN;
+    if (!domainOk && !isModerator) throw new Error('Only @oberlin.edu accounts can join ObVault');
+    const u = store.upsertUser({ email, name: info.name || email.split('@')[0], isModerator });
+    // make sure the flag sticks even if the account already existed without it
+    if (isModerator && !u.isModerator) { u.isModerator = true; store.save(); }
     const token = store.createSession(u.id, 'google');
     res.json({ token, user: publicUser(u, u) });
   } catch (e) {
