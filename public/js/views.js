@@ -65,13 +65,12 @@ export async function gateView(state) {
 
 // ---- feed -----------------------------------------------------------------------
 export async function feedView(state, params) {
-  const wrap = el('div', { class: 'wide' });
-  wrap.append(
-    el('h1', { class: 'page-title' }, 'The Feed'),
-    el('p', { class: 'page-sub' }, 'Daily Oberlin Artistry Reel'));
-
-  
   const view = el('div');
+  view.append(el('div', { class: 'wide' },
+    el('h1', { class: 'page-title' }, 'The Feed'),
+    el('p', { class: 'page-sub' }, 'Daily Oberlin Artistry Reel')));
+
+  // const view = el('div');
   const tabs = el('div', { class: 'feed-tabs' },
     el('a', { class: 'tab' + (params.tab !== 'following' ? ' active' : ''), href: catHref(params.cat, null) }, 'Latest'),
     el('a', { class: 'tab' + (params.tab === 'following' ? ' active' : ''), href: catHref(params.cat, 'following') }, 'Following'));
