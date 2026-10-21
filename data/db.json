@@ -233,6 +233,12 @@
    "userId": 1,
    "provider": "google",
    "createdAt": "2026-10-21T13:07:33.654Z"
+  },
+  {
+   "token": "6234a55551093b7b3606464c960ff2278affc128511a769b",
+   "userId": 1,
+   "provider": "google",
+   "createdAt": "2026-10-21T13:16:02.120Z"
   }
  ],
  "collections": []
