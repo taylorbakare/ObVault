@@ -109,7 +109,7 @@ input, textarea, select { font: inherit; color: inherit; }
 }
 .wordmark {
   font-family: var(--font-display); font-style: bold;
-  font-size: 24px; font-weight: 600; letter-spacing: 0.01em;
+  font-size: 24px; font-weight: 800; letter-spacing: 0.01em;
 }
 .wm-accent { color: var(--accent); }
 .topbar-actions { margin-left: auto; display: flex; align-items: center; gap: 6px; }
