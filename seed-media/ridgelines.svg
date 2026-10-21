@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-label="Ink drawing of stacked ridgelines like a waveform">
+  <rect width="1200" height="1200" fill="#f0ebdd"/>
+  <g fill="none" stroke="#33302a" stroke-linecap="round">
+    <path stroke-width="10" d="M80 300 Q200 220 320 300 T560 300 T800 300 T1040 300 T1120 300"/>
+    <path stroke-width="9" d="M80 380 Q140 330 200 380 T320 380 T440 380 T560 380 T680 380 T800 380 T920 380 T1040 380 T1120 380"/>
+    <path stroke-width="8" d="M80 470 Q230 400 380 470 T680 470 T980 470 T1120 470"/>
+    <path stroke-width="7" d="M80 570 Q160 530 240 570 T400 570 T560 570 T720 570 T880 570 T1040 570 T1120 570"/>
+    <path stroke-width="6" d="M80 680 Q280 620 480 680 T880 680 T1120 680"/>
+    <path stroke-width="5" d="M80 800 Q180 760 280 800 T480 800 T680 800 T880 800 T1080 800 T1120 800"/>
+    <path stroke-width="4" d="M80 930 Q300 890 520 930 T960 930 T1120 930"/>
+  </g>
+  <path d="M80 1020 Q400 990 720 1020 T1120 1010" stroke="#b0522f" stroke-width="6" fill="none"/>
+  <text x="80" y="1120" font-family="Georgia, serif" font-style="italic" font-size="36" fill="#6d6455">seven ridges, one breath</text>
+</svg>

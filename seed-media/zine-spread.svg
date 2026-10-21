@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100" role="img" aria-label="Zine spread collage with torn paper and type">
+  <defs>
+    <filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="17" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  </defs>
+  <rect width="1600" height="1100" fill="#e9e2d0"/>
+  <path d="M800 0 L800 1100" stroke="#b9b09a" stroke-width="3" stroke-dasharray="10 8"/>
+  <!-- left page: torn collage -->
+  <g>
+    <path d="M120 160 L560 130 L580 420 L540 470 L150 480 L110 380 Z" fill="#c9d2c2"/>
+    <path d="M170 520 Q300 490 430 530 L410 720 Q280 750 160 710 Z" fill="#b0522f"/>
+    <circle cx="330" cy="880" r="110" fill="#4a5a68"/>
+    <path d="M240 260 L480 240" stroke="#5c5a4a" stroke-width="6"/>
+    <path d="M260 320 Q380 300 470 330" stroke="#5c5a4a" stroke-width="6" fill="none"/>
+    <text x="140" y="1000" font-family="Georgia, serif" font-style="italic" font-size="52" fill="#3c382f">what we ate,</text>
+    <text x="140" y="1064" font-family="Georgia, serif" font-style="italic" font-size="52" fill="#3c382f">winter term</text>
+  </g>
+  <!-- right page: recipe type -->
+  <g font-family="Georgia, serif" fill="#3c382f">
+    <text x="880" y="220" font-size="64" letter-spacing="8">NOODLES,</text>
+    <text x="880" y="290" font-size="30" fill="#6d6455">the 1 a.m. edition</text>
+    <text x="880" y="380" font-size="30">— one (1) block of ramen</text>
+    <text x="880" y="430" font-size="30">— the last egg in the hall</text>
+    <text x="880" y="480" font-size="30">— chili oil, gifted</text>
+    <text x="880" y="530" font-size="30">— a window, cracked open</text>
+    <rect x="880" y="580" width="540" height="4" fill="#b0522f"/>
+    <text x="880" y="660" font-size="30" font-style="italic" fill="#6d6455">boil while the kettle boils.</text>
+    <text x="880" y="710" font-size="30" font-style="italic" fill="#6d6455">eat standing up.</text>
+    <text x="880" y="760" font-size="30" font-style="italic" fill="#6d6455">feed the rest to a friend.</text>
+    <text x="880" y="980" font-size="26" fill="#6d6455">*risograph, edition of 40</text>
+  </g>
+  <rect width="1600" height="1100" filter="url(#g)" opacity="0.07"/>
+</svg>

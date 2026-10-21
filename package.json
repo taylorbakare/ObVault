@@ -1,0 +1,20 @@
+{
+  "name": "obvault",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ObVault - the Oberlin student and alumni art archive. A quiet, feed-first home for student artwork.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node lib/seed.js --force"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1"
+  }
+}

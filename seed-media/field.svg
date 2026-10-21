@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-label="Photo of a winter field with power lines">
+  <defs>
+    <filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="41" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+    <linearGradient id="ws" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfe3dd"/><stop offset="0.6" stop-color="#d3d5cb"/><stop offset="1" stop-color="#c9c8ba"/></linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#ws)"/>
+  <!-- low sun -->
+  <circle cx="1180" cy="360" r="70" fill="#e8e0c8" opacity="0.9"/>
+  <circle cx="1180" cy="360" r="130" fill="#e8e0c8" opacity="0.35"/>
+  <!-- field -->
+  <path d="M0 560 Q400 520 800 560 T1600 560 L1600 1000 L0 1000 Z" fill="#a8a28c"/>
+  <path d="M0 660 Q500 620 1000 670 T1600 650 L1600 1000 L0 1000 Z" fill="#8f8a76"/>
+  <path d="M0 780 Q600 740 1600 800 L1600 1000 L0 1000 Z" fill="#77725f"/>
+  <!-- snow patches -->
+  <path d="M200 640 Q420 610 640 640 Q420 670 200 640 Z" fill="#d6d3c2" opacity="0.7"/>
+  <path d="M900 840 Q1150 810 1400 850 Q1150 880 900 840 Z" fill="#c4c0ab" opacity="0.6"/>
+  <!-- power line poles -->
+  <g stroke="#4c483e" stroke-width="10" fill="none">
+    <path d="M280 520 L280 700"/>
+    <path d="M280 700 L320 520"/>
+    <path d="M240 560 L320 560"/>
+    <path d="M240 600 L320 600"/>
+    <path d="M900 500 L900 660"/>
+    <path d="M900 660 L940 500"/>
+    <path d="M860 540 L940 540"/>
+    <path d="M860 580 L940 580"/>
+    <path d="M240 566 Q600 540 860 546" stroke-width="4"/>
+    <path d="M320 600 Q600 576 860 582" stroke-width="4"/>
+  </g>
+  <!-- birds -->
+  <g stroke="#3c382f" stroke-width="4" fill="none">
+    <path d="M480 300 Q500 288 520 300"/>
+    <path d="M560 330 Q578 320 596 330"/>
+  </g>
+  <rect width="1600" height="1000" filter="url(#g)" opacity="0.08"/>
+</svg>

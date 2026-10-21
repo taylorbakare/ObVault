@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" role="img" aria-label="Warm dusk photograph of a rail trestle">
+  <defs>
+    <filter id="g" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e8ddc8"/>
+      <stop offset="0.45" stop-color="#e3cfae"/>
+      <stop offset="0.75" stop-color="#d9b08c"/>
+      <stop offset="1" stop-color="#c78a68"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2e3c2" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#f2e3c2" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#sky)"/>
+  <circle cx="760" cy="560" r="150" fill="#f0dfb8"/>
+  <rect x="0" y="300" width="1200" height="420" fill="url(#glow)"/>
+  <!-- distant treeline -->
+  <path d="M0 760 L60 742 L130 756 L200 738 L260 752 L340 734 L420 754 L500 740 L580 750 L660 736 L740 752 L820 742 L900 756 L980 738 L1060 750 L1130 742 L1200 754 L1200 820 L0 820 Z" fill="#a98868"/>
+  <!-- mid hills -->
+  <path d="M0 830 Q200 770 420 830 T1200 830 L1200 980 L0 980 Z" fill="#8a6a52"/>
+  <!-- trestle -->
+  <g fill="#3a2b24">
+    <rect x="120" y="900" width="26" height="330"/>
+    <rect x="320" y="880" width="26" height="350"/>
+    <rect x="520" y="920" width="26" height="310"/>
+    <rect x="720" y="884" width="26" height="346"/>
+    <rect x="920" y="906" width="26" height="324"/>
+    <rect x="1120" y="892" width="26" height="338"/>
+    <rect x="60" y="868" width="1140" height="34"/>
+    <rect x="60" y="826" width="1140" height="18"/>
+    <path d="M60 868 L60 826 M1200 868 L1200 826" stroke="#3a2b24" stroke-width="8"/>
+  </g>
+  <!-- foreground grass -->
+  <path d="M0 1230 Q300 1190 600 1230 T1200 1230 L1200 1500 L0 1500 Z" fill="#5c4a3a"/>
+  <path d="M0 1330 Q400 1300 800 1336 T1200 1330 L1200 1500 L0 1500 Z" fill="#42332a"/>
+  <!-- vignette + grain -->
+  <rect width="1200" height="1500" fill="url(#v)"/>
+  <radialGradient id="v" cx="0.5" cy="0.45" r="0.75">
+    <stop offset="0.55" stop-color="#000" stop-opacity="0"/>
+    <stop offset="1" stop-color="#2a1c12" stop-opacity="0.35"/>
+  </radialGradient>
+  <rect width="1200" height="1500" filter="url(#g)" opacity="0.07"/>
+</svg>

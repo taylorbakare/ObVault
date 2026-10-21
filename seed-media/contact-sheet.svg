@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" role="img" aria-label="Contact sheet of six small film frames">
+  <defs>
+    <filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="13" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  </defs>
+  <rect width="1600" height="1200" fill="#201d19"/>
+  <g>
+    <!-- frame 1 -->
+    <rect x="100" y="120" width="380" height="300" fill="#8d8474"/>
+    <path d="M100 300 Q290 240 480 300 L480 420 L100 420 Z" fill="#5f584a"/>
+    <circle cx="200" cy="200" r="40" fill="#c9b98e"/>
+    <!-- frame 2 -->
+    <rect x="610" y="120" width="380" height="300" fill="#b7a98c"/>
+    <path d="M610 340 Q800 300 990 340 L990 420 L610 420 Z" fill="#7c6f58"/>
+    <path d="M700 180 L880 180 L820 300 L760 300 Z" fill="#5d5342"/>
+    <!-- frame 3 -->
+    <rect x="1120" y="120" width="380" height="300" fill="#4c5a66"/>
+    <circle cx="1310" cy="240" r="80" fill="#d9cba2"/>
+    <path d="M1120 330 Q1310 300 1500 330 L1500 420 L1120 420 Z" fill="#37424c"/>
+    <!-- frame 4 -->
+    <rect x="100" y="620" width="380" height="300" fill="#c4a37e"/>
+    <path d="M100 920 L480 920 L400 700 L200 700 Z" fill="#8a6a4e"/>
+    <!-- frame 5 -->
+    <rect x="610" y="620" width="380" height="300" fill="#9d968a"/>
+    <path d="M610 700 Q800 660 990 700 L990 920 L610 920 Z" fill="#6e6659"/>
+    <g stroke="#3c3830" stroke-width="5"><path d="M700 760 L880 860"/><path d="M880 760 L700 860"/></g>
+    <!-- frame 6 -->
+    <rect x="1120" y="620" width="380" height="300" fill="#5c5246"/>
+    <circle cx="1240" cy="740" r="46" fill="#d9c9a4"/>
+    <circle cx="1400" cy="820" r="70" fill="#b3a07a"/>
+  </g>
+  <!-- sprocket holes -->
+  <g fill="#e8e0cc">
+    <rect x="60" y="100" width="20" height="14" rx="4"/><rect x="60" y="180" width="20" height="14" rx="4"/><rect x="60" y="260" width="20" height="14" rx="4"/><rect x="60" y="340" width="20" height="14" rx="4"/><rect x="60" y="420" width="20" height="14" rx="4"/>
+    <rect x="1520" y="100" width="20" height="14" rx="4"/><rect x="1520" y="180" width="20" height="14" rx="4"/><rect x="1520" y="260" width="20" height="14" rx="4"/><rect x="1520" y="340" width="20" height="14" rx="4"/><rect x="1520" y="420" width="20" height="14" rx="4"/>
+    <rect x="60" y="600" width="20" height="14" rx="4"/><rect x="60" y="680" width="20" height="14" rx="4"/><rect x="60" y="760" width="20" height="14" rx="4"/><rect x="60" y="840" width="20" height="14" rx="4"/><rect x="60" y="920" width="20" height="14" rx="4"/>
+    <rect x="1520" y="600" width="20" height="14" rx="4"/><rect x="1520" y="680" width="20" height="14" rx="4"/><rect x="1520" y="760" width="20" height="14" rx="4"/><rect x="1520" y="840" width="20" height="14" rx="4"/><rect x="1520" y="920" width="20" height="14" rx="4"/>
+  </g>
+  <text x="120" y="1080" font-family="Georgia, serif" font-size="40" fill="#cfc5ae">roll 12 · 400 speed · developed in the bathroom sink</text>
+  <rect width="1600" height="1200" filter="url(#g)" opacity="0.1"/>
+</svg>

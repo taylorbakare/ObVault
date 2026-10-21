@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-label="Geometric hexagon quilt in muted fabrics">
+  <defs>
+    <pattern id="hex" width="300" height="260" patternUnits="userSpaceOnUse">
+      <g transform="translate(150 0)">
+        <path d="M0 65 L75 30 L150 65 L150 130 L75 165 L0 130 Z" fill="#b0522f"/>
+        <path d="M150 65 L225 30 L300 65 L300 130 L225 165 L150 130 Z" fill="#8a7a5c"/>
+      </g>
+      <g transform="translate(0 130)">
+        <path d="M0 65 L75 30 L150 65 L150 130 L75 165 L0 130 Z" fill="#4a5a68"/>
+        <path d="M150 65 L225 30 L300 65 L300 130 L225 165 L150 130 Z" fill="#c98a3d"/>
+      </g>
+      <g transform="translate(150 260)">
+        <path d="M0 65 L75 30 L150 65 L150 130 L75 165 L0 130 Z" fill="#6d5a4e"/>
+        <path d="M150 65 L225 30 L300 65 L300 130 L225 165 L150 130 Z" fill="#a08d6c"/>
+      </g>
+    </pattern>
+  </defs>
+  <rect width="1200" height="1200" fill="#efe8d8"/>
+  <rect x="80" y="80" width="1040" height="1040" fill="url(#hex)"/>
+  <rect x="80" y="80" width="1040" height="1040" fill="none" stroke="#5c4f3f" stroke-width="8"/>
+</svg>

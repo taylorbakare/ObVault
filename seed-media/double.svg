@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600" role="img" aria-label="Double exposure portrait in ink tones">
+  <defs>
+    <filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="2" seed="11" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+    <linearGradient id="bgd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dcd4c2"/><stop offset="1" stop-color="#b9ac93"/></linearGradient>
+  </defs>
+  <rect width="1200" height="1600" fill="url(#bgd)"/>
+  <!-- face profile, first exposure -->
+  <path d="M420 380 C 400 560 430 700 520 820 C 560 880 620 930 700 950 C 800 975 880 930 900 850 C 915 790 905 740 930 700 C 950 665 990 650 1000 610 C 975 615 940 605 930 580 C 960 540 980 500 975 460 C 900 500 850 480 820 440 C 760 360 640 320 540 340 Z" fill="#4a4238" opacity="0.85"/>
+  <!-- second exposure: leaves -->
+  <g opacity="0.5" fill="#71664f">
+    <path d="M620 900 Q700 1080 660 1320 Q580 1100 620 900 Z"/>
+    <path d="M700 940 Q820 1120 800 1360 Q700 1140 700 940 Z"/>
+    <path d="M560 960 Q560 1160 500 1340 Q460 1120 560 960 Z"/>
+  </g>
+  <!-- light leak -->
+  <path d="M0 0 L1200 0 L1200 240 Q600 400 0 240 Z" fill="#c9855e" opacity="0.4"/>
+  <!-- bird scratches -->
+  <g stroke="#2e2921" stroke-width="5" fill="none" opacity="0.7">
+    <path d="M180 1180 Q260 1130 340 1180"/>
+    <path d="M760 220 Q840 170 920 220"/>
+  </g>
+  <rect width="1200" height="1600" filter="url(#g)" opacity="0.1"/>
+</svg>

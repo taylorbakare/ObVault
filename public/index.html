@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ObVault — the Oberlin art archive</title>
+  <meta name="description" content="A quiet, feed-first archive of artwork by Oberlin students and alumni.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=boska@400,500,600,700&f[]=switzer@300,400,500,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    // theme before paint (no flash). Storage is cookie-based and guarded, so
+    // this degrades quietly to memory in sandboxed previews.
+    (function () {
+      var saved = null;
+      try {
+        var m = document.cookie.match(/(?:^|; )obv-theme=([^;]*)/);
+        if (m) saved = decodeURIComponent(m[1]);
+      } catch (e) {}
+      var dark = saved ? saved === 'dark'
+        : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      // base URL for API + media. __PORT_5000__ is rewritten when this app is
+      // deployed behind a proxy; locally it stays '' (same origin).
+      var raw = '__PORT_5000__';
+      window.OBV_API_BASE = raw.indexOf('__') === 0 ? '' : raw;
+    })();
+  </script>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="topbar" id="topbar">
+    <div class="topbar-inner">
+      <button class="icon-btn" id="menuBtn" aria-label="Open menu" title="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+      </button>
+      <a class="wordmark" href="#/" aria-label="ObVault home">Ob<span class="wm-accent">Vault</span></a>
+      <div class="topbar-actions">
+        <button class="icon-btn" id="themeBtn" aria-label="Switch theme" title="Light / dark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" id="themeIcon"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg>
+        </button>
+        <a class="btn btn-accent btn-small" href="#/new" id="addBtn" title="Add work">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          <span>Add work</span>
+        </a>
+        <a href="#/me" id="meAvatar" class="topbar-avatar" aria-label="Your profile" hidden></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- hideaway navigation -->
+  <nav class="drawer" id="drawer" aria-label="Main menu" aria-hidden="true">
+    <div class="drawer-head">
+      <span class="drawer-title">Browse</span>
+      <button class="icon-btn" id="drawerClose" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="drawer-links" id="drawerLinks">
+      <a href="#/">The feed</a>
+      <a href="#/archive">The archive</a>
+      <a href="#/opportunities">Opportunities</a>
+      <a href="#/new">Add your work</a>
+      <a href="#/me">Your profile</a>
+    </div>
+    <div class="drawer-section-label">Categories</div>
+    <div class="drawer-cats" id="drawerCats"></div>
+    <div class="drawer-foot">
+      <p>An archive of work by Oberlin students & alumni.<br>Kept by the ObVault student collective.</p>
+      <button class="btn btn-ghost btn-small" id="signOutBtn">Sign out</button>
+    </div>
+  </nav>
+  <div class="scrim" id="scrim" aria-hidden="true"></div>
+
+  <main id="view" class="view"></main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

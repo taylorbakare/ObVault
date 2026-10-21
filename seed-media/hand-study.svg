@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" role="img" aria-label="Ink line drawing study of a hand">
+  <rect width="1200" height="1500" fill="#efe9da"/>
+  <g fill="none" stroke="#2c2822" stroke-width="7" stroke-linecap="round">
+    <!-- forearm -->
+    <path d="M300 1380 C 320 1180 340 1040 420 940"/>
+    <!-- palm -->
+    <path d="M420 940 C 380 860 390 760 450 700 C 520 630 640 620 700 680"/>
+    <!-- thumb -->
+    <path d="M440 880 C 380 830 350 760 380 700 C 400 660 450 650 480 680"/>
+    <path d="M380 700 C 360 650 350 600 360 560"/>
+    <!-- fingers -->
+    <path d="M700 680 C 760 620 820 560 860 500 C 890 450 890 400 860 380 C 830 360 790 380 760 430"/>
+    <path d="M480 680 C 470 600 480 520 520 460 C 550 410 600 390 630 410 C 660 430 660 480 640 530"/>
+    <path d="M520 640 C 520 560 540 480 580 420 C 610 370 660 350 690 370"/>
+    <path d="M600 660 C 610 590 640 520 680 470"/>
+    <!-- knuckle marks -->
+    <path d="M500 600 Q510 610 520 600" stroke-width="4"/>
+    <path d="M540 540 Q550 550 560 540" stroke-width="4"/>
+    <path d="M460 700 Q470 710 480 700" stroke-width="4"/>
+  </g>
+  <!-- shading hatch -->
+  <g stroke="#2c2822" stroke-width="3" opacity="0.35">
+    <path d="M360 900 L440 960"/><path d="M380 940 L460 1000"/><path d="M400 980 L480 1040"/>
+    <path d="M700 720 L760 660"/><path d="M720 760 L780 700"/>
+  </g>
+  <text x="140" y="1420" font-family="Georgia, serif" font-style="italic" font-size="38" fill="#6d6455">hand, left — practicing holding still</text>
+</svg>

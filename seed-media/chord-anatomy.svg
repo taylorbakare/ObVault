@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-label="Abstract charcoal painting with a red smear">
+  <defs>
+    <filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="3" seed="31" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+    <filter id="soft"><feGaussianBlur stdDeviation="26"/></filter>
+  </defs>
+  <rect width="1200" height="1200" fill="#ddd5c4"/>
+  <!-- charcoal masses -->
+  <g fill="#3d3830" filter="url(#soft)">
+    <path d="M180 820 Q300 640 480 720 Q640 790 700 920 Q560 1010 380 980 Q220 950 180 820 Z"/>
+    <path d="M560 300 Q760 260 900 380 Q1010 480 980 640 Q860 700 720 620 Q580 540 560 300 Z"/>
+    <rect x="240" y="180" width="90" height="300"/>
+  </g>
+  <!-- red smear -->
+  <path d="M520 620 Q680 520 860 660 Q760 760 640 780 Q540 760 520 620 Z" fill="#a63d29" filter="url(#soft)"/>
+  <!-- charcoal strokes -->
+  <g stroke="#26221c" stroke-width="9" fill="none" opacity="0.85">
+    <path d="M140 420 Q260 360 320 420"/>
+    <path d="M880 880 Q980 830 1040 900"/>
+    <path d="M640 140 L700 240"/>
+  </g>
+  <rect width="1200" height="1200" filter="url(#g)" opacity="0.16"/>
+</svg>
