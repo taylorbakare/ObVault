@@ -214,7 +214,7 @@ export async function archiveView(state, params) {
 
   const input = el('input', {
     type: 'text', class: 'archive-input', value: params.q || '',
-    placeholder: 'e.g. riso, Maya, thesis, tape…', 'aria-label': 'Search the archive'
+    placeholder: 'e.g. riso, documentary, thesis, tape…', 'aria-label': 'Search the archive'
   });
   const count = el('p', { class: 'archive-count' });
   const grid = el('div', { class: 'works-grid' });
