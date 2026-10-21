@@ -45,7 +45,7 @@ const ALLOWED_DOMAIN = 'oberlin.edu';
 
 // ---------------------------------------------------------------- setup ---
 store.load();
-seedIfEmpty();
+if (process.env.NODE_ENV !== 'production') seedIfEmpty();
 
 const UPLOADS = path.join(process.env.STORAGE_DIR || __dirname, 'uploads');
 fs.mkdirSync(UPLOADS, { recursive: true });
