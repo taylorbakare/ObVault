@@ -4,6 +4,7 @@ A quiet, feed-first archive for artwork by Oberlin students and alumni — photo
 
 - **Feed-first** — you land on art, not on headers and menus
 - **Archive search** — one page that searches the whole vault by artist, title, description, or tag, updating as you type
+- **PDFs** — scripts, scores, and books post as sideways-flipping page decks (rendered in-browser with PDF.js, no download needed)
 - **Instagram-style profiles** — grid of works, bio, follow
 - **Likes, comments, shareable permalinks**
 - **Opportunities board** — casting calls, open exhibitions, collaborations

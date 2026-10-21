@@ -401,9 +401,9 @@ export async function composeView(state) {
   let kind = 'image';
   const f = el('form', { class: 'form' },
     el('h1', null, 'Add your work'),
-    el('p', { class: 'sub' }, 'The vault takes images, audio, video, and writing.'));
+    el('p', { class: 'sub' }, 'The vault takes images, audio, video, PDFs (scripts, scores, books), and writing.'));
 
-  const kinds = [['image', 'Image'], ['audio', 'Audio'], ['video', 'Video'], ['text', 'Writing']];
+  const kinds = [['image', 'Image'], ['audio', 'Audio'], ['video', 'Video'], ['pdf', 'PDF / Script'], ['text', 'Writing']];
   const picker = el('div', { class: 'field' },
     el('label', null, 'What is it?'),
     el('div', { class: 'kind-picker' }, kinds.map(([k, label]) => {
@@ -417,7 +417,7 @@ export async function composeView(state) {
       return b;
     })));
 
-  const fileInput = el('input', { type: 'file', accept: 'image/*,audio/*,video/*', style: 'display:none' });
+  const fileInput = el('input', { type: 'file', accept: 'image/*,audio/*,video/*,application/pdf', style: 'display:none' });
   const drop = el('div', { class: 'dropzone' }, 'Drop a file here, or click to choose');
   const fileWrap = el('div', { class: 'field' }, el('label', null, 'The work itself'), drop, fileInput);
   drop.addEventListener('click', () => fileInput.click());

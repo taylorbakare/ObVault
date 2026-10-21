@@ -60,7 +60,8 @@ const UPLOAD_TYPES = {
   'image/webp': '.webp', 'image/avif': '.avif', 'image/svg+xml': '.svg',
   'audio/mpeg': '.mp3', 'audio/mp3': '.mp3', 'audio/wav': '.wav',
   'audio/ogg': '.ogg', 'audio/webm': '.weba', 'audio/aac': '.aac', 'audio/x-m4a': '.m4a',
-  'video/mp4': '.mp4', 'video/webm': '.webm', 'video/quicktime': '.mov'
+  'video/mp4': '.mp4', 'video/webm': '.webm', 'video/quicktime': '.mov',
+  'application/pdf': '.pdf'
 };
 const avatarUpload = multer({
   storage: multer.diskStorage({
@@ -288,6 +289,7 @@ app.post('/api/posts', requireAuth, upload.single('media'), (req, res) => {
     if (req.file.mimetype.startsWith('image/')) k = 'image';
     else if (req.file.mimetype.startsWith('audio/')) k = 'audio';
     else if (req.file.mimetype.startsWith('video/')) k = 'video';
+    else if (req.file.mimetype === 'application/pdf') k = 'pdf';
   } else if (k !== 'text') {
     return res.status(400).json({ error: 'Attach a file, or choose "writing" to post text.' });
   }

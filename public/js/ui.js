@@ -79,6 +79,7 @@ export function mediaBlock(post) {
     return el('div', { class: 'post-media' },
       el('video', { src: mediaUrl(post.media.filename), controls: '', playsinline: '', preload: 'metadata' }));
   }
+  if (post.kind === 'pdf' && post.media) return pdfPager(post);
   if (post.kind === 'audio' && post.media) return audioPlayer(post);
   // writing
   return el('div', { class: 'post-media writing' },
@@ -129,6 +130,88 @@ export function audioPlayer(post) {
     wave
   );
   return card;
+}
+
+
+// ---- PDF pager: pages laid out horizontally, flipped through sideways -------
+let pdfjsPromise = null;
+function ensurePdfJs() {
+  if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+  if (!pdfjsPromise) pdfjsPromise = new Promise((resolve, reject) => {
+    const script = el('script', { src: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js' });
+    script.onload = async () => {
+      try {
+        // load the worker as a blob so the CDN's cross-origin URL never trips it up
+        const r = await fetch('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js');
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = URL.createObjectURL(await r.blob());
+        resolve(window.pdfjsLib);
+      } catch (e) { reject(e); }
+    };
+    script.onerror = () => reject(new Error('PDF viewer failed to load.'));
+    document.head.append(script);
+  });
+  return pdfjsPromise;
+}
+
+export function pdfPager(post) {
+  const wrap = el('div', { class: 'post-media pdf-wrap' });
+  const counter = el('div', { class: 'pdf-count' }, '\u2026');
+  const row = el('div', { class: 'pdf-row', role: 'region', tabindex: '0', 'aria-label': 'Read ' + post.title + ' page by page' });
+  wrap.append(row, counter);
+
+  ensurePdfJs().then(async (lib) => {
+    let doc;
+    try {
+      doc = await lib.getDocument({ url: mediaUrl(post.media.filename) }).promise;
+    } catch (e) {
+      counter.remove();
+      row.replaceWith(el('div', { class: 'post-desc' }, 'This document could not be opened.'));
+      return;
+    }
+    counter.textContent = '1 / ' + doc.numPages;
+
+    // render pages lazily, only when they scroll near the viewport of the row
+    const io = new IntersectionObserver((entries) => {
+      for (const en of entries) {
+        if (!en.isIntersecting) continue;
+        io.unobserve(en.target);
+        const page = doc.getPage(Number(en.target.dataset.page)).then((p) => {
+          const scale = (Math.min(row.clientWidth * 0.86, 760) / p.getViewport({ scale: 1 }).width) * 0.82;
+          const vp = p.getViewport({ scale });
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          const cv = en.target;
+          cv.width = Math.round(vp.width * dpr);
+          cv.height = Math.round(vp.height * dpr);
+          cv.style.width = Math.round(vp.width) + 'px';
+          cv.style.height = Math.round(vp.height) + 'px';
+          p.render({ canvasContext: cv.getContext('2d'), viewport: vp, transform: dpr > 1 ? [dpr, 0, 0, dpr, 0, 0] : undefined });
+        });
+      }
+    }, { root: row, rootMargin: '400px' });
+
+    for (let i = 1; i <= doc.numPages; i++) {
+      const cv = el('canvas', { class: 'pdf-page', 'data-page': String(i) });
+      row.append(cv);
+      io.observe(cv);
+    }
+
+    // page counter follows the page nearest the center of the row
+    let t = null;
+    row.addEventListener('scroll', () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        const mid = row.scrollLeft + row.clientWidth / 2;
+        let best = 1, dist = Infinity;
+        for (const cv of row.children) {
+          const d = Math.abs(cv.offsetLeft + cv.offsetWidth / 2 - mid);
+          if (d < dist) { dist = d; best = Number(cv.dataset.page); }
+        }
+        counter.textContent = best + ' / ' + doc.numPages;
+      }, 60);
+    }, { passive: true });
+  });
+
+  return wrap;
 }
 
 // ---- comments ------------------------------------------------------------------
