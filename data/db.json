@@ -1,5 +1,5 @@
 {
- "nextId": 13,
+ "nextId": 14,
  "users": [
   {
    "id": 1,
@@ -227,6 +227,12 @@
    "userId": 12,
    "provider": "google",
    "createdAt": "2026-10-21T12:12:59.171Z"
+  },
+  {
+   "token": "a8ede3ddc94708b920cd2b53b24e6654c9cdada4063bf41c",
+   "userId": 1,
+   "provider": "google",
+   "createdAt": "2026-10-21T13:07:33.654Z"
   }
  ],
  "collections": []
