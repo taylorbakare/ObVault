@@ -204,7 +204,7 @@ export async function postView(state, id) {
 export async function archiveView(state, params) {
   const wrap = el('div', { class: 'wide' });
   wrap.append(
-    el('h1', { class: 'page-title' }, 'The archive'),
+    el('h1', { class: 'page-title' }, 'The Archive'),
     el('p', { class: 'page-sub' }, 'Every work kept in the vault — search by artist, title, or description.'));
 
   const input = el('input', {
@@ -589,7 +589,7 @@ export async function opportunitiesView(state) {
 export async function composeView(state) {
   let kind = 'image';
   const f = el('form', { class: 'form' },
-    el('h1', null, 'Add your work'),
+    el('h1', null, 'Add Your Work'),
     el('p', { class: 'sub' }, 'The vault takes images, audio, video, PDFs (scripts, scores, books), and writing.'));
 
   const kinds = [['image', 'Image'], ['audio', 'Audio'], ['video', 'Video'], ['pdf', 'PDF / Script'], ['text', 'Writing']];
