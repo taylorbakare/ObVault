@@ -12,21 +12,21 @@ jobs:
       GH_TOKEN: ${{ secrets.GH_PAT }}
       CS_NAME: glorious-garbanzo    # e.g. spicy-space-waffle — from `gh codespace list`
     steps:
-      - name: Start codespace if it is stopped
-        run: |
-          set -e
-          get() { gh api "/user/codespaces?per_page=100" --jq ".[] | select(.name==\"$CS_NAME\") | .$1"; }
-          STATE=$(get state)
-          if [ "$STATE" != "Available" ]; then
-            echo "Codespace is $STATE — starting it..."
-            gh api -X POST "/user/codespaces/$(get id)/start" || true
-            for i in $(seq 1 40); do
-              sleep 15
-              STATE=$(get state)
-              [ "$STATE" = "Available" ] && break
-            done
-          fi
-          [ "$STATE" = "Available" ] || { echo "codespace never came up"; exit 1; }
+      # - name: Start codespace if it is stopped
+      #   run: |
+      #     set -e
+      #     get() { gh api "/user/codespaces?per_page=100" --jq ".[] | select(.name==\"$CS_NAME\") | .$1"; }
+      #     STATE=$(get state)
+      #     if [ "$STATE" != "Available" ]; then
+      #       echo "Codespace is $STATE — starting it..."
+      #       gh api -X POST "/user/codespaces/$(get id)/start" || true
+      #       for i in $(seq 1 40); do
+      #         sleep 15
+      #         STATE=$(get state)
+      #         [ "$STATE" = "Available" ] && break
+      #       done
+      #     fi
+      #     [ "$STATE" = "Available" ] || { echo "codespace never came up"; exit 1; }
       - name: Restart ObVault server if it died
         run: |
           gh codespace ssh -c "$CS_NAME" -- 'pgrep -f "node server.js" >/dev/null || (cd /workspaces/*/ && nohup node server.js >> server.log 2>&1 < /dev/null &)'
