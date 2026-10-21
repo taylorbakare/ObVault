@@ -56,7 +56,7 @@ export async function gateView(state) {
 
   return el('div', { class: 'gate' },
     el('div', { class: 'gate-mark' }, 'Ob', el('span', { class: 'wm-accent' }, 'Vault')),
-    el('p', { class: 'gate-tag' }, 'The student art archive. A quiet feed of work by Oberlin students and alumni — film, prose, prints, sound, and everything made in between.'),
+    el('p', { class: 'gate-tag' }, 'The student art archive. Work by Oberlin students and alumni — film, prose, prints, sound, and everything in between.'),
     el('p', { class: 'gate-note' }, 'open to @oberlin.edu accounts'),
     box,
     demo.accounts.length ? el('p', { class: 'gate-demo-note' }, 'Demo mode: these are sample accounts for previewing. To open the vault to real Oberlin Google accounts, set GOOGLE_CLIENT_ID in your .env (see README) — demo sign-in switches itself off automatically.') : null
