@@ -68,7 +68,7 @@ export async function feedView(state, params) {
   const view = el('div');
   view.append(el('div', { class: 'wide' },
     el('h1', { class: 'page-title' }, 'The Feed'),
-    el('p', { class: 'page-sub' }, 'Daily Oberlin Artistry Reel')));
+    ));
 
   // const view = el('div');
   const tabs = el('div', { class: 'feed-tabs' },
