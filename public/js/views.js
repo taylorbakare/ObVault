@@ -568,7 +568,7 @@ export async function opportunitiesView(state) {
     el('h1', { style: 'font-size:24px' }, 'Post a call'),
     el('p', { class: 'sub' }, 'Looking for actors, artists, musicians, hands?'),
     field('Title', el('input', { type: 'text', name: 'title', placeholder: 'ACTORS WANTED — thesis film', required: '' })),
-    field('What you\u2019re looking for', el('textarea', { name: 'body', required: '', placeholder: 'Who, what, when, and why someone should say yes.' })),
+    field('What you\u2019re looking for', el('textarea', { name: 'body', required: '', placeholder: 'Who, what, when, and why?' })),
     field('Type', el('select', { name: 'type' },
       el('option', { value: 'casting' }, 'Casting / performers'),
       el('option', { value: 'collaboration' }, 'Collaboration'),

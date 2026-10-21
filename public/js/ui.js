@@ -240,7 +240,7 @@ function commentNode(post, c, me, { onCount }) {
 }
 
 function commentForm(post, { onCount }) {
-  const input = el('input', { type: 'text', placeholder: 'Say something kind…', 'aria-label': 'Write a comment', maxlength: '600' });
+  const input = el('input', { type: 'text', placeholder: 'Say something...', 'aria-label': 'Write a comment', maxlength: '600' });
   const form = el('form', { class: 'comment-form' }, input, el('button', { class: 'btn btn-ghost btn-small', type: 'submit' }, 'Post'));
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
