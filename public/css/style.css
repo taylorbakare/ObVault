@@ -103,7 +103,7 @@ input, textarea, select { font: inherit; color: inherit; }
   border-bottom: 1px solid var(--border);
 }
 .topbar-inner {
-  max-width: 1080px; margin: 0 auto; height: 60px;
+  max-width: none; margin: 0 auto; height: 60px;
   padding: 0 var(--content-pad);
   display: flex; align-items: center; gap: 14px;
 }
