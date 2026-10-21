@@ -70,7 +70,7 @@ export async function feedView(state, params) {
     el('h1', { class: 'page-title' }, 'The Feed'),
     ));
 
-  const view_col = el('div');
+  // const view = el('div');
   const tabs = el('div', { class: 'feed-tabs' },
     el('a', { class: 'tab' + (params.tab !== 'following' ? ' active' : ''), href: catHref(params.cat, null) }, 'Latest'),
     el('a', { class: 'tab' + (params.tab === 'following' ? ' active' : ''), href: catHref(params.cat, 'following') }, 'Following'));
