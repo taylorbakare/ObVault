@@ -227,7 +227,7 @@ input, textarea, select { font: inherit; color: inherit; }
   transition: all 140ms var(--ease);
 }
 .chip:hover { color: var(--text); border-color: var(--border-strong); }
-.chip.active { color: #f8f4ec; background: var(--text); border-color: var(--text); }
+.chip.active { color: #f8f4ec; background: #e0574a; border-color: var(--text); }
 
 .feed-end {
   text-align: center; padding: 44px 0 10px;
