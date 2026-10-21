@@ -1,0 +1,233 @@
+{
+ "nextId": 13,
+ "users": [
+  {
+   "id": 1,
+   "email": "ibakare@oberlin.edu",
+   "name": "Taylor Bakare",
+   "handle": "ibakare",
+   "bio": "first",
+   "classYear": "",
+   "isModerator": false,
+   "avatarHue": 163,
+   "createdAt": "2026-10-21T09:06:26.758Z",
+   "avatarFile": "baae39786df4ae7358e7d7f8.jpg"
+  },
+  {
+   "id": 5,
+   "email": "mmiragli@oberlin.edu",
+   "name": "Mateo Miraglia",
+   "handle": "mmiragli",
+   "bio": "",
+   "classYear": "",
+   "isModerator": false,
+   "avatarHue": 192,
+   "createdAt": "2026-10-21T09:13:11.886Z"
+  },
+  {
+   "id": 12,
+   "email": "taylorscatalogs@gmail.com",
+   "name": "Taylor",
+   "handle": "taylorscatalogs",
+   "bio": "",
+   "classYear": "",
+   "isModerator": true,
+   "avatarHue": 171,
+   "createdAt": "2026-10-21T12:12:59.171Z"
+  }
+ ],
+ "posts": [
+  {
+   "id": 2,
+   "userId": 1,
+   "kind": "image",
+   "title": "billion bikes in the bowl",
+   "category": "Photography",
+   "description": "",
+   "tags": [],
+   "media": {
+    "filename": "184c0fc2f3777cb8bd58d305.jpg",
+    "mime": "image/jpeg"
+   },
+   "createdAt": "2026-10-21T09:07:54.765Z"
+  },
+  {
+   "id": 3,
+   "userId": 1,
+   "kind": "image",
+   "title": "expressed way",
+   "category": "Photography",
+   "description": "",
+   "tags": [],
+   "media": {
+    "filename": "6cd4d88cd32deb07af690db7.jpg",
+    "mime": "image/jpeg"
+   },
+   "createdAt": "2026-10-21T09:08:25.823Z"
+  },
+  {
+   "id": 4,
+   "userId": 1,
+   "kind": "image",
+   "title": "wine",
+   "category": "Photography",
+   "description": "",
+   "tags": [],
+   "media": {
+    "filename": "96b30fc695bbd6a334003aa3.jpg",
+    "mime": "image/jpeg"
+   },
+   "createdAt": "2026-10-21T09:09:11.783Z"
+  },
+  {
+   "id": 6,
+   "userId": 5,
+   "kind": "text",
+   "title": "think piece",
+   "category": "Prose",
+   "description": "(insert conclusion)",
+   "tags": [],
+   "media": null,
+   "createdAt": "2026-10-21T09:14:26.133Z"
+  },
+  {
+   "id": 8,
+   "userId": 5,
+   "kind": "video",
+   "title": "hunchoz - full attack (instrumental)",
+   "category": "Sound & Audio Art",
+   "description": "prod me\r\nog instrumental prod kudz + rob surreal",
+   "tags": [
+    "music",
+    "producing",
+    "beats"
+   ],
+   "media": {
+    "filename": "6fb36602890daa8e10076360.mp4",
+    "mime": "video/mp4"
+   },
+   "createdAt": "2026-10-21T09:32:07.717Z"
+  }
+ ],
+ "comments": [
+  {
+   "id": 7,
+   "postId": 6,
+   "userId": 1,
+   "body": "wow, this guy is always pontificating",
+   "createdAt": "2026-10-21T09:16:57.468Z"
+  },
+  {
+   "id": 9,
+   "postId": 2,
+   "userId": 5,
+   "body": "too fye where r they going though",
+   "createdAt": "2026-10-21T11:08:08.072Z"
+  },
+  {
+   "id": 10,
+   "postId": 4,
+   "userId": 5,
+   "body": "Our sins",
+   "createdAt": "2026-10-21T11:08:46.172Z"
+  },
+  {
+   "id": 11,
+   "postId": 8,
+   "userId": 1,
+   "body": "tuff",
+   "createdAt": "2026-10-21T11:32:32.270Z"
+  }
+ ],
+ "likes": [
+  {
+   "postId": 6,
+   "userId": 1,
+   "createdAt": "2026-10-21T09:17:08.470Z"
+  },
+  {
+   "postId": 8,
+   "userId": 1,
+   "createdAt": "2026-10-21T09:38:22.855Z"
+  },
+  {
+   "postId": 3,
+   "userId": 1,
+   "createdAt": "2026-10-21T11:05:08.261Z"
+  },
+  {
+   "postId": 2,
+   "userId": 1,
+   "createdAt": "2026-10-21T11:05:14.050Z"
+  },
+  {
+   "postId": 4,
+   "userId": 1,
+   "createdAt": "2026-10-21T11:24:43.671Z"
+  }
+ ],
+ "follows": [
+  {
+   "followerId": 1,
+   "followeeId": 5,
+   "createdAt": "2026-10-21T09:18:13.010Z"
+  },
+  {
+   "followerId": 5,
+   "followeeId": 1,
+   "createdAt": "2026-10-21T09:21:39.737Z"
+  },
+  {
+   "followerId": 12,
+   "followeeId": 1,
+   "createdAt": "2026-10-21T12:13:28.225Z"
+  }
+ ],
+ "opportunities": [],
+ "oppInterest": [],
+ "sessions": [
+  {
+   "token": "0f764ed67006be147773fe5d480ec319c578a363e7fec22d",
+   "userId": 1,
+   "provider": "google",
+   "createdAt": "2026-10-21T09:06:26.759Z"
+  },
+  {
+   "token": "06b5dcbea893f6e6c2c0ef9ee1d3efb21fab2476ac7ebef2",
+   "userId": 5,
+   "provider": "google",
+   "createdAt": "2026-10-21T09:13:11.886Z"
+  },
+  {
+   "token": "12acd19fb80d8134a3010462dc98bb91cc85dd21686433d0",
+   "userId": 1,
+   "provider": "google",
+   "createdAt": "2026-10-21T10:41:58.879Z"
+  },
+  {
+   "token": "c08fffc7a45704b0976aab93cd3fa05dd4e36c6e98018b08",
+   "userId": 1,
+   "provider": "google",
+   "createdAt": "2026-10-21T11:04:14.704Z"
+  },
+  {
+   "token": "92f10c1960d1aef96b9dbe205a042acf74a37e65398ee3da",
+   "userId": 1,
+   "provider": "google",
+   "createdAt": "2026-10-21T11:24:35.460Z"
+  },
+  {
+   "token": "62f26b1b6b7d0f7d2ce971733be62b66c20fb441cb383a1e",
+   "userId": 1,
+   "provider": "google",
+   "createdAt": "2026-10-21T11:54:11.900Z"
+  },
+  {
+   "token": "fb6b3a790dc88a51f1b5baa2f6d0c12fef58d4c608adf242",
+   "userId": 12,
+   "provider": "google",
+   "createdAt": "2026-10-21T12:12:59.171Z"
+  }
+ ],
+ "collections": []
+}
