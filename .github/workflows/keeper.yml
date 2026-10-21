@@ -1,0 +1,35 @@
+name: ObVault keeper
+on:
+  schedule:
+    - cron: "13 */3 * * *"   # every 3 hours, UTC — off the :00 minute to dodge delays
+  workflow_dispatch:          # adds a manual "Run workflow" button in the Actions tab
+
+jobs:
+  keep-and-backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ secrets.GH_PAT }}
+      CS_NAME: your-codespace-name    # e.g. spicy-space-waffle — from `gh codespace list`
+    steps:
+      - name: Start codespace if it is stopped
+        run: |
+          set -e
+          get() { gh api "/user/codespaces?per_page=100" --jq ".[] | select(.name==\"$CS_NAME\") | .$1"; }
+          STATE=$(get state)
+          if [ "$STATE" != "Available" ]; then
+            echo "Codespace is $STATE — starting it..."
+            gh api -X POST "/user/codespaces/$(get id)/start" || true
+            for i in $(seq 1 40); do
+              sleep 15
+              STATE=$(get state)
+              [ "$STATE" = "Available" ] && break
+            done
+          fi
+          [ "$STATE" = "Available" ] || { echo "codespace never came up"; exit 1; }
+      - name: Restart ObVault server if it died
+        run: |
+          gh codespace ssh -c "$CS_NAME" -- 'pgrep -f "node server.js" >/dev/null || (cd /workspaces/*/ && nohup node server.js >> server.log 2>&1 < /dev/null &)'
+      - name: Back up vault data
+        run: |
+          gh codespace ssh -c "$CS_NAME" -- 'cd /workspaces/*/ && git add -f data/db.json && if ! git diff --cached --quiet; then git commit -m "vault backup $(date -u +%F" "%R)" && git push && echo PUSHED; else echo "no changes"; fi'
