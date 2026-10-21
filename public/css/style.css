@@ -94,6 +94,30 @@ input, textarea, select { font: inherit; color: inherit; }
 }
 [data-theme='dark'] .grain { opacity: 0.35; }
 
+/* zine backdrop — torn newsprint collage behind everything.
+   Dark ink on warm paper in light mode; inverted to light ink on
+   black in dark mode. Radial mask keeps the middle calm for reading,
+   edges grungier — like a wheatpasted wall behind the vault. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url('../img/zine-bg.svg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.62;
+  -webkit-mask-image: radial-gradient(ellipse 130% 105% at 50% 45%,
+      rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.7) 55%, #000 100%);
+  mask-image: radial-gradient(ellipse 130% 105% at 50% 45%,
+      rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.7) 55%, #000 100%);
+}
+[data-theme='dark'] body::before {
+  filter: invert(1);
+  opacity: 0.45;
+}
+
 /* ---- topbar ---------------------------------------------------------- */
 .topbar {
   position: sticky; top: 0; z-index: 50;
