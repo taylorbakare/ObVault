@@ -66,7 +66,7 @@ export async function gateView(state) {
 // ---- feed -----------------------------------------------------------------------
 export async function feedView(state, params) {
   const view = el('div');
-  view.append(el('div', { class: 'feed-tabs' },
+  view.append(el('div', { class: 'feed-col' },
     el('h1', { class: 'page-title' }, 'The Feed'),
     ));
 
