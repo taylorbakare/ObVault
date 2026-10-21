@@ -23,7 +23,7 @@
   --font-display: 'Boska', Georgia, 'Times New Roman', sans-serif;
   --font-body: 'Switzer', 'Helvetica Neue', sans-serif;
   --font-mono: 'Fragment Mono', 'Courier New', monospace;
-  --feed-w: 640px;
+  --feed-w: 700px;
   --radius: 8px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --content-pad: 20px;
