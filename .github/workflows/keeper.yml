@@ -27,9 +27,9 @@ jobs:
             done
           fi
           [ "$STATE" = "Available" ] || { echo "codespace never came up"; exit 1; }
-      - name: Restart ObVault server if it died
-        run: |
-          gh codespace ssh -c "$CS_NAME" -- 'pgrep -f "node server.js" >/dev/null || (cd /workspaces/*/ && nohup node server.js >> server.log 2>&1 < /dev/null &)'
+      # - name: Restart ObVault server if it died
+      #   run: |
+      #     gh codespace ssh -c "$CS_NAME" -- 'pgrep -f "node server.js" >/dev/null || (cd /workspaces/*/ && nohup node server.js >> server.log 2>&1 < /dev/null &)'
       - name: Back up vault data
         run: |
           gh codespace ssh -c "$CS_NAME" -- 'cd /workspaces/*/ && git add -f data/db.json && if ! git diff --cached --quiet; then git commit -m "vault backup $(date -u +%F" "%R)" && git push && echo PUSHED; else echo "no changes"; fi'
